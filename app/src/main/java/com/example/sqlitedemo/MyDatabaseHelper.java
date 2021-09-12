@@ -1,5 +1,6 @@
 package com.example.sqlitedemo;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -15,7 +16,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String NAME = "Name";
     private static final String AGE = "Age";
     private static final String GENDER = "Gender";
-    private static final int VERSION_NUMBER = 1;
+    private static final int VERSION_NUMBER = 2;
     private static final String DROP_TABLE = "DROP TABLE IF EXISTS "+TABLE_NAME;
     private Context context;
     public MyDatabaseHelper(Context context) {
@@ -43,5 +44,16 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Exception: "+e, Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    public long insertData(String Sname, String Sage, String Sgender){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(NAME,Sname);
+        contentValues.put(AGE,Sage);
+        contentValues.put(GENDER,Sgender);
+
+        long rID = sqLiteDatabase.insert(TABLE_NAME,null,contentValues);
+        return rID;
     }
 }
